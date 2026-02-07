@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Bibek Parajuli">
+  <meta name="keyword" content="member,description,information,contact us">
+  <meta name="description" content="Our member are Pritisha, Bibek, Roshan, Yugen, Tenzing">
+  <title>About Us</title>
+
+  <link rel="stylesheet" type="text/css" href="../css/style.css">
+
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      margin: 0;
+      background-color: #f4f6f8;
+    }
+
+    html {
+      box-sizing: border-box;
+    }
+
+    *,
+    *:before,
+    *:after {
+      box-sizing: inherit;
+    }
+
+    /* About Section */
+    .about-section {
+      padding: 50px;
+      text-align: center;
+      background-color: green;
+      color: white;
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .column {
+      width: 30%;
+      margin: 10px;
+    }
+
+    .card {
+      background: white;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .card img {
+      width: 100%;
+    }
+
+    .container {
+      padding: 16px;
+    }
+
+    .title {
+      color: green;
+    }
+
+    .button {
+      background-color: grey;
+      border: none;
+      color: white;
+      padding: 8px;
+      width: 100%;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      background-color: #555;
+    }
+
+    /* Feedback */
+    .feedback-btn {
+      margin: 30px auto;
+      display: block;
+      padding: 12px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .feedback-form {
+      display: none;
+      max-width: 600px;
+      margin: 30px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    .feedback-form input,
+    .feedback-form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+    }
+
+    .submit-btn {
+      background-color: gray;
+      color: white;
+      border: none;
+      padding: 10px;
+      width: 100%;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    /* CV Modal */
+    .cv-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 1000;
+    }
+
+    .cv-content {
+      background: white;
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 25px;
+      border-radius: 8px;
+      position: relative;
+    }
+
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 28px;
+      cursor: pointer;
+    }
+
+    .cv-content h1 {
+      color: green;
+    }
+
+    @media screen and (max-width: 768px) {
+      .column {
+        width: 90%;
+      }
+    }
+  </style>
+  </style>
+</head>
+<!--Header Navigation Content-->
+<header class="header">
+  <div class="Vessel nav-container">
+    <!--Logo-->
+    <a href="../index.html" class="logo"><img src="../pictures/logo/logo.png" alt="EthosTerraGoods"></a>
+
+    <!--Navigation bar-->
+    <nav>
+      <ul class="nav-menu">
+        <li class="nav-items"><a href="../index.html" class="menu">Home</a></li>
+        <li class="nav-items"><a href="product.html" class="menu">Product</a></li>
+        <li class="nav-items"><a href="aboutUs.html" class="current">About</a></li>
+        <li class="nav-items"><a href="blog.html" class="menu">Blog</a></li>
+        <li class="nav-items"><a href="research.html" class="menu">Research</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<body>
+
+  <div class="about-section">
+    <h1>About Us</h1>
+    <p>
+      We believe that small, thoughtful choices can create a big, lasting impact on our planet.
+      That’s why we design and produce sustainable bamboo products that offer a natural, eco-friendly
+      alternative to single-use plastics in everyday life. From home essentials to personal-use items,
+      our products are crafted to help reduce waste, conserve resources, and protect the environment—without
+      a product, you’re choosing a cleaner, greener future for generations to come.
+    </p>
+  </div>
+
+  <h2 style="text-align:center">Our Team</h2>
+
+  <div class="row">
+
+    <div class="column">
+      <div class="card">
+        <img src="../pictures/About/Tenzing.jpeg">
+        <div class="container">
+          <h2>Tenzing Gauchan</h2>
+          <p class="title">Home Page</p>
+          <button class="button" onclick="openCV('tenzing')">About Me</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="column">
+      <div class="card">
+        <img src="../pictures/About/Bibek.jpeg">
+        <div class="container">
+          <h2>Bibek Parajuli</h2>
+          <p class="title">About Us Page</p>
+          <button class="button" onclick="openCV('bibek')">About Me</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="column">
+      <div class="card">
+        <img src="../pictures/About/Roshan.jpeg">
+        <div class="container">
+          <h2>Roshan Tamang</h2>
+          <p class="title">Research Page</p>
+          <button class="button" onclick="openCV('roshan')">About Me</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="column">
+      <div class="card">
+        <img src="../pictures/About/Pritisha.jpg">
+        <div class="container">
+          <h2>Pritisha Basnet</h2>
+          <p class="title">Product Page</p>
+          <button class="button" onclick="openCV('pritisha')">About Me</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="column">
+      <div class="card">
+        <img src="../pictures/About/Yugen.jpeg">
+        <div class="container">
+          <h2>Yugen Maharjan</h2>
+          <p class="title">Blog Page</p>
+          <button class="button" onclick="openCV('yugen')">About Me</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <button class="feedback-btn" onclick="toggleFeedback()">Give Feedback</button>
+
+  <div class="feedback-form" id="feedbackForm">
+    <h2>Feedback</h2>
+    <form onsubmit="submitFeedback(event)">
+      <input type="text" placeholder="Name" required>
+      <input type="email" placeholder="Email" required>
+      <textarea placeholder="Message" required></textarea>
+      <button class="submit-btn">Submit</button>
+    </form>
+  </div>
+
+  <!-- CV MODAL -->
+  <div id="cvModal" class="cv-modal">
+    <div class="cv-content">
+      <span class="close" onclick="closeCV()">&times;</span>
+      <h1 id="cvName"></h1>
+      <p id="cvRole"></p>
+      <p id="cvEmail"></p>
+
+      <h3>Career Objective</h3>
+      <p id="cvObjective"></p>
+
+      <h3>Skills</h3>
+      <ul id="cvSkills"></ul>
+
+      <h3>Education</h3>
+      <p id="cvEducation"></p>
+
+      <h3>Projects</h3>
+      <ul id="cvProjects"></ul>
+
+      <h3>Interests</h3>
+      <ul id="cvInterests"></ul>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="F-Vessel">
+      <!--Footer Brand-->
+      <div class="footer-logo">
+        <img src="../pictures/logo/logo4.png" alt="EthosTerraGoods">
+        <span style="font-size: 17px; color: #F5F5F0; font-weight: 600;">Ethos Terra Goods</span>
+      </div>
+
+      <!--Navigation Links-->
+      <div class="footer-nav">
+        <span id="footer-link-header">Quick links</span>
+        <ul class="footer-menu">
+          <li><a href="../index.html" class="footer-link">Home</a></li>
+          <li><a href="product.html" class="footer-link">Product</a></li>
+          <li><a href="aboutUs.html" class="footer-link">About Us</li>
+          <li><a href="blog.html" class="footer-link">Blog</a></li>
+          <li><a href="research.html" class="footer-link">Research</a></li>
+        </ul>
+      </div>
+
+      <!--Contact Details-->
+      <div class="contact-us">
+        <p>Contact Us</p>
+        <p>Email: <i>ethosterragoods@gmail.com</i></p>
+        <p>Phone: 9876434343</p>
+        <p>Location: Baagbazar,Kathmandu,Nepal</p>
+        <a style="text-decoration: none; color: white;" href="pages/enquiryForm.html">Enquiry Now</a>
+
+      </div>
+    </div>
+    <!-- Copyright -->
+    <div class="copyright">
+      <p>&copy; 2026 Ethos Terra Goods. All rights reserved. | Designed with sustainability in mind.</p>
+    </div>
+  </footer>
+
+
+  <script>
+    const cvData = {
+      tenzing: {
+        name: "Tenzing Gauchan",
+        role: "IT Student",
+        email: "tenzinggauchan7sh@gmail.com",
+        objective: "To grow as a tech learner by working on real projects.",
+        skills: ["HTML", "CSS", "JavaScript"],
+        education: "Bachelor in networking and cyber security",
+        projects: ["Website Design"],
+        interests: ["Web Development"]
+      },
+
+      bibek: {
+        name: "Bibek Parajuli",
+        role: "Web Learner",
+        email: "bibekparajuli1050@gmail.com",
+        objective: "To become a skilled web developer.",
+        skills: ["HTML", "CSS", "Teamwork"],
+        education: "Bachelor in networking and cyber security",
+        projects: ["About Us Page"],
+        interests: ["Frontend Design"]
+      },
+
+      roshan: {
+        name: "Roshan Tamang",
+        role: "Research Student",
+        email: "roshantmg309@gmail.com",
+        objective: "To explore cybersecurity and research.",
+        skills: ["Research", "Cybersecurity"],
+        education: "Bachelor in networking and cyber security",
+        projects: ["Security Research"],
+        interests: ["Ethical Hacking"]
+      },
+
+      pritisha: {
+        name: "Pritisha Basnet",
+        role: "Product Designer",
+        email: "pretisa778@gmail.com",
+        objective: "To improve creative problem-solving skills.",
+        skills: ["UI Design", "HTML", "CSS"],
+        education: "Bachelor in networking and cyber security",
+        projects: ["Product Page"],
+        interests: ["Design"]
+      },
+
+      yugen: {
+        name: "Yugen Maharjan",
+        role: "IT Enthusiast",
+        email: "itshugokuroshaki@gmail.com",
+        objective: "To build a successful IT career and stay updated with modern technologies.",
+        skills: ["Programming", "Web Development", "HTML", "CSS", "JavaScript", "Problem Solving"],
+        education: "Bachelor in networking and cyber security",
+        projects: ["Portfolio Website", "Blog Page", "JS Mini Projects"],
+        interests: ["Technology", "Cybersecurity", "Coding"]
+      }
+    };
+
+    function openCV(person) {
+      const d = cvData[person];
+      document.getElementById("cvName").innerText = d.name;
+      document.getElementById("cvRole").innerText = d.role;
+      document.getElementById("cvEmail").innerText = d.email;
+      document.getElementById("cvObjective").innerText = d.objective;
+
+      const skills = document.getElementById("cvSkills");
+      skills.innerHTML = "";
+      d.skills.forEach(s => skills.innerHTML += `<li>${s}</li>`);
+
+      document.getElementById("cvEducation").innerText = d.education;
+
+      const projects = document.getElementById("cvProjects");
+      projects.innerHTML = "";
+      d.projects.forEach(p => projects.innerHTML += `<li>${p}</li>`);
+
+      const interests = document.getElementById("cvInterests");
+      interests.innerHTML = "";
+      d.interests.forEach(i => interests.innerHTML += `<li>${i}</li>`);
+
+      document.getElementById("cvModal").style.display = "block";
+    }
+
+    function closeCV() {
+      document.getElementById("cvModal").style.display = "none";
+    }
+
+    function toggleFeedback() {
+      const f = document.getElementById("feedbackForm");
+      f.style.display = f.style.display === "block" ? "none" : "block";
+    }
+
+    function submitFeedback(e) {
+      e.preventDefault();
+      alert("✅ Thank you for your feedback!");
+      e.target.reset();
+    }
+  </script>
+
+</body>
+
+</html>

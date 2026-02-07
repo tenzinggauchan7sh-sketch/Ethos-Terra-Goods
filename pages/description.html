@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Roshan Tamang">
+    <meta name="description" content="Product Detail Page - EthosTerraGoods">
+    <title>Product Details - EthosTerraGoods</title>
+
+    <!-- STYLING -->
+    <style>
+        /* --- RESET & BASE STYLES --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f9f9f9; color: #333; line-height: 1.6; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+
+        /* --- HEADER & NAV (Same as your original) --- */
+        .header { background: #fff; border-bottom: 1px solid #ddd; padding: 15px 0; }
+        .container { width: 95%; max-width: 1200px; margin: 0 auto; }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; }
+        .logo img { height: 50px; }
+        .nav-menu { display: flex; gap: 25px; }
+        .nav-items a { font-weight: bold; color: #1b5e20; text-transform: uppercase; font-size: 14px; }
+        .nav-items a:hover { color: #cd853f; }
+        .current { border-bottom: 2px solid #1b5e20; }
+
+        /* --- BREADCRUMBS --- */
+        .breadcrumbs { padding: 20px 0; font-size: 14px; color: #666; margin-left: 2.5%; }
+        .breadcrumbs span { margin: 0 5px; color: #ccc; }
+        .breadcrumbs a:hover { text-decoration: underline; color: #1b5e20; }
+
+        /* --- PRODUCT DETAILS LAYOUT --- */
+        .product-detail-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            background: white;
+            width: 95%;
+            margin: 0 auto 40px auto;
+            border: 1px solid #ddd;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        /* Left: Images */
+        .detail-gallery {
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+            border-right: 1px solid #eee;
+        }
+        .main-image-container {
+            width: 100%;
+            height: 400px;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            overflow: hidden;
+            border-radius: 4px;
+        }
+        .main-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .main-image-container img:hover { transform: scale(1.05); }
+        
+        .thumbnails { display: flex; gap: 10px; }
+        .thumb {
+            width: 70px;
+            height: 70px;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            object-fit: cover;
+            opacity: 0.7;
+        }
+        .thumb:hover, .thumb.active { opacity: 1; border: 2px solid #1b5e20; }
+
+        /* Right: Info */
+        .detail-info {
+            flex: 1;
+            min-width: 300px;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+        }
+        .category-tag {
+            color: #cd853f;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        .detail-title { font-size: 32px; color: #1b5e20; margin-bottom: 10px; }
+        .detail-price { font-size: 24px; color: #333; font-weight: bold; margin-bottom: 20px; }
+        .comfort-text { 
+            color: #d2b48c; 
+            font-weight: bold; 
+            font-size: 14px; 
+            margin-bottom: 20px; 
+            background: #fdfaf5;
+            padding: 10px;
+            border-left: 4px solid #d2b48c;
+        }
+        .detail-desc { margin-bottom: 30px; color: #555; }
+
+        /* Actions */
+        .action-area { display: flex; align-items: center; gap: 15px; margin-top: auto; border-top: 1px solid #eee; padding-top: 20px; }
+        .qty-selector { display: flex; border: 1px solid #ccc; }
+        .qty-btn {
+            width: 35px; height: 40px; background: #f9f9f9; border: none; cursor: pointer;
+            font-weight: bold; font-size: 18px; color: #333;
+        }
+        .qty-input {
+            width: 40px; height: 40px; border: none; text-align: center; font-weight: bold;
+            border-left: 1px solid #ccc; border-right: 1px solid #ccc;
+        }
+        .add-to-cart-big {
+            flex: 1;
+            background: #1b5e20;
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: background 0.3s;
+        }
+        .add-to-cart-big:hover { background: #144a17; }
+
+        /* --- TABS SECTION --- */
+        .tabs-container { width: 95%; margin: 0 auto 50px auto; }
+        .tabs-header { display: flex; border-bottom: 2px solid #ddd; }
+        .tab-btn {
+            padding: 15px 30px;
+            background: #f0f0f0;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            color: #666;
+            margin-right: 5px;
+        }
+        .tab-btn.active { background: #1b5e20; color: white; }
+        
+        .tab-content { padding: 30px; background: white; border: 1px solid #ddd; border-top: none; display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.5s; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* --- REVIEWS --- */
+        .review-item { border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 15px; }
+        .review-author { font-weight: bold; color: #1b5e20; margin-bottom: 5px; }
+        .review-date { font-size: 12px; color: #999; margin-left: 10px; }
+        .review-text { font-style: italic; color: #555; }
+
+        /* Review Form (matching your style but expanded) */
+        .review-form-box {
+            background-color: #cd853f;
+            padding: 20px;
+            border-radius: 4px;
+            color: white;
+            margin-top: 20px;
+            max-width: 600px;
+        }
+        .review-form-box b { display: block; margin-bottom: 10px; font-size: 16px; }
+        .review-form-box textarea {
+            width: 100%; height: 80px; border: none; padding: 10px; 
+            resize: none; box-sizing: border-box; margin-bottom: 10px; font-family: inherit;
+        }
+        .submit-review { 
+            background: #fdfaf5; border: 1px solid #8b4513; 
+            padding: 8px 20px; font-size: 14px; cursor: pointer; font-weight: bold; color: #8b4513;
+        }
+        .submit-review:hover { background: white; }
+
+        /* --- RELATED PRODUCTS GRID (From your code) --- */
+        .section-title {
+            background-color: peachpuff;
+            color: #1b5e20;
+            padding: 10px 20px;
+            display: inline-block;
+            font-weight: bold;
+            margin: 20px 0 15px 2.5%;
+            font-size: 18px;
+            border-radius: 4px;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            width: 95%;
+            margin: 0 auto 50px auto;
+        }
+        .product {
+            border: 1px solid #ddd; padding: 15px; text-align: center; background: white;
+            display: flex; flex-direction: column; transition: transform 0.2s;
+        }
+        .product:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .product img { width: 100%; height: 180px; object-fit: cover; margin-bottom: 10px; }
+        .add-to-cart { 
+            background: #1b5e20; color: white; border: none; 
+            padding: 8px; cursor: pointer; font-weight: bold; width: 100%; margin-top: auto;
+        }
+
+        /* --- FOOTER (From your code) --- */
+        .footer { background: #1b5e20; color: #fff; padding: 40px 0 20px; margin-top: 50px; }
+        .footer-content { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px; }
+        .footer-logo img { height: 60px; margin-bottom: 10px; filter: brightness(0) invert(1); }
+        .footer-link { color: #ccc; display: block; margin-bottom: 8px; font-size: 14px; }
+        .footer-link:hover { color: peachpuff; }
+        .footer-nav, .contact-us { flex: 1; min-width: 200px; }
+        #footer-link-header { font-size: 18px; border-bottom: 1px solid #cd853f; padding-bottom: 5px; display: inline-block; margin-bottom: 15px; }
+        .copyright { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 13px; color: #ccc; }
+
+        /* --- TOAST NOTIFICATION (Replacement for alert) --- */
+        .toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #1b5e20;
+            color: #fff;
+            text-align: center;
+            border-radius: 4px;
+            padding: 16px;
+            position: fixed;
+            z-index: 100;
+            right: 30px;
+            bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.5s, bottom 0.5s;
+        }
+        .toast.show { visibility: visible; opacity: 1; bottom: 50px; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .product-detail-wrapper { flex-direction: column; }
+            .detail-gallery { border-right: none; border-bottom: 1px solid #eee; }
+            .product-grid { grid-template-columns: repeat(2, 1fr); }
+            .nav-menu { display: none; } /* Simplified for mobile demo */
+        }
+    </style>
+</head>
+<body>
+
+    <!--Header Navigation Content-->
+    <header class="header">
+        <div class="container nav-container">
+            <!--Logo-->
+            <a href="../index.html" class="logo">
+                <!-- Used a placeholder logo, but you can switch back to yours -->
+                <img src="../pictures/logo/logo.png" alt="EthosTerraGoods">
+            </a>
+
+            <!--Navigation bar-->
+            <nav>
+                <ul class="nav-menu">
+                    <li class="nav-items"><a href="../index.html" class="menu">Home</a></li>
+                    <li class="nav-items"><a href="product.html" class="menu">Product</a></li>
+                    <li class="nav-items"><a href="aboutUs.html" class="menu">About</a></li>
+                    <li class="nav-items"><a href="blog.html" class="menu">Blog</a></li>
+                    <li class="nav-items"><a href="research.html" class="menu">Research</a></li>    
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs">
+        <a href="../index.html">Home</a> <span>&gt;</span> 
+        <a href="product.html">Decor Items</a> <span>&gt;</span> 
+        <span style="color:#1b5e20; font-weight:bold;">Bamboo Lamp Decor</span>
+    </div>
+
+    <!-- Product Details -->
+    <div class="product-detail-wrapper">
+        
+        <!-- Image Section -->
+        <div class="detail-gallery">
+            <div class="main-image-container">
+                <!-- Using your local path, with a picsum fallback just in case -->
+                <img id="mainImage" src="../pictures/Product2/decor1.jpeg" alt="Bamboo Lamp">
+            </div>
+        </div>
+
+        <!-- Info Section -->
+        <div class="detail-info">
+            <div class="category-tag">Decor Items</div>
+            <h1 class="detail-title">Bamboo Lamp Decor</h1>
+            <div class="detail-price">Rs 1,200</div>
+            
+            <div class="comfort-text">Comfortable-filled with comfort ✨✨✨✨✨</div>
+            
+            <p class="detail-desc">
+                Handcrafted bamboo lamp providing warm, natural lighting. This eco-friendly lamp is made from sustainably sourced bamboo, featuring intricate weaving patterns that create beautiful shadows when lit. Perfect for adding a touch of rustic elegance to your living room or bedroom.
+            </p>
+
+            <div class="action-area">
+                <div class="qty-selector">
+                    <button class="qty-btn" onclick="updateQty(-1)">-</button>
+                    <input type="text" id="qtyInput" class="qty-input" value="1" readonly>
+                    <button class="qty-btn" onclick="updateQty(1)">+</button>
+                </div>
+                <button class="add-to-cart-big" onclick="addToCartDetail('Bamboo Lamp Decor')">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabs Description & Reviews -->
+    <div class="tabs-container">
+        <div class="tabs-header">
+            <button class="tab-btn active" onclick="openTab('desc')">Description</button>
+            <button class="tab-btn" onclick="openTab('reviews')">Reviews (2)</button>
+        </div>
+
+        <!-- Description Tab -->
+        <div id="desc" class="tab-content active">
+            <h3>Product Details</h3>
+            <p><strong>Material:</strong> 100% Natural Bamboo</p>
+            <p><strong>Dimensions:</strong> 12 inches (Height) x 6 inches (Width)</p>
+            <p><strong>Bulb Type:</strong> LED (E27 base recommended)</p>
+            <br>
+            <p>Care Instructions: Wipe clean with a dry cloth. Do not use harsh chemicals. Keep away from excessive moisture to maintain the integrity of the bamboo.</p>
+        </div>
+
+        <!-- Reviews Tab -->
+        <div id="reviews" class="tab-content">
+            <div id="reviews-list">
+                <div class="review-item">
+                    <div class="review-author">Sarah J. <span class="review-date">Oct 12, 2025</span></div>
+                    <div class="review-text">Absolutely beautiful lamp! The lighting is so soft and relaxing.</div>
+                </div>
+                <div class="review-item">
+                    <div class="review-author">Ramesh K. <span class="review-date">Sept 05, 2025</span></div>
+                    <div class="review-text">Great craftsmanship. Looks exactly like the pictures.</div>
+                </div>
+            </div>
+
+            <!-- Review Form -->
+            <div class="review-form-box">
+                <b>Write a Review</b>
+                <textarea id="reviewText" placeholder="Share your thoughts about this product..."></textarea>
+                <button class="submit-review" onclick="submitReviewDetail()">Submit Review</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Related Products -->
+    <div class="section-title">RELATED PRODUCTS</div>
+    <section class="product-grid">
+        <div class="product">
+            <img src="../pictures/Product2/decor4.jpeg" alt="Makeup Holder">
+            <h3>Bamboo Makeup Holder</h3>
+            <p>Rs 900</p>
+            <button class="add-to-cart" onclick="addToCart('Bamboo Makeup Holder')">ADD TO CART</button>
+        </div>
+        <div class="product">
+            <img src="../pictures/Product2/decor2.jpeg" alt="Wall Holder">
+            <h3>Bamboo Holder Decor</h3>
+            <p>Rs 850</p>
+            <button class="add-to-cart" onclick="addToCart('Bamboo Holder Decor')">ADD TO CART</button>
+        </div>
+        <div class="product">
+            <img src="../pictures/Product2/decor5.jpeg"alt="Tissue Holder">
+            <h3>Bamboo Tissue Holder</h3>
+            <p>Rs 450</p>
+            <button class="add-to-cart" onclick="addToCart('Bamboo Tissue Holder')">ADD TO CART</button>
+        </div>
+        <div class="product">
+            <img src="../pictures/Product2/decor6.jpeg" alt="Plants Holder">
+            <h3>Bamboo Plants Holder</h3>
+            <p>Rs 1,100</p>
+            <button class="add-to-cart" onclick="addToCart('Bamboo Plants Holder')">ADD TO CART</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <!--Footer Brand-->
+                <div class="footer-logo">
+                    <img src="../pictures/logo/logo4.png" alt="EthosTerraGoods" >
+                    <span style="font-size: 17px; color: #F5F5F0; font-weight: 600;">Ethos Terra Goods</span>
+                </div>
+
+                <!--Navigation Links-->
+                <div class="footer-nav">
+                    <span id="footer-link-header">Quick links</span>
+                    <ul class="footer-menu">
+                        <li><a href="index.html" class="footer-link">Home</a></li>
+                        <li><a href="pages/product.html" class="footer-link">Product</a></li>
+                        <li><a href="pages/aboutUs.html" class="footer-link">About Us</a></li>
+                        <li><a href="pages/blog.html" class="footer-link">Blog</a></li>
+                        <li><a href="pages/research.html" class="footer-link">Research</a></li>  
+                    </ul>
+                </div>
+
+                <!--Contact Details-->
+                <div class="contact-us"> 
+                    <p>Contact Us</p>
+                    <p>Email: <i>ethosterragoods@gmail.com</i></p>
+                    <p>Phone: 9876434343</p>
+                    <p>Location: Baagbazar,Kathmandu,Nepal</p>
+                </div>
+            </div>
+            
+             <!-- Copyright -->
+            <div class="copyright">
+                <p>&copy; 2026 Ethos Terra Goods. All rights reserved. | Designed with sustainability in mind.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification Container -->
+    <div id="toast" class="toast">Message here</div>
+
+    <!-- JAVASCRIPT -->
+    <script>
+    // 1. THE DATABASE (List all your products here)
+    const products = [
+        {
+            id: 1,
+            name: "Bamboo Lamp Decor",
+            category: "Decor Items",
+            price: "Rs 1,200",
+            image: "../pictures/Product2/decor1.jpeg",
+            description: "Handcrafted bamboo lamp providing warm, natural lighting. This eco-friendly lamp is made from sustainably sourced bamboo.",
+            reviews: ["Beautiful lamp!", "Great lighting."]
+        },
+        {
+            id: 2,
+            name: "Bamboo Makeup Holder",
+            category: "Decor Items",
+            price: "Rs 900",
+            image: "../pictures/Product2/decor4.jpeg",
+            description: "Multi-tier bamboo organizer for cosmetics. Keeps your vanity tidy and stylish.",
+            reviews: ["Very sturdy.", "Looks nice on my table."]
+        },
+        {
+            id: 3,
+            name: "Bamboo Pan Flute",
+            category: "Instruments",
+            price: "Rs 250",
+            image: "../pictures/Product2/panfluet.jpg",
+            description: "Traditional musical instrument made from high-quality bamboo. Perfect for beginners.",
+            reviews: ["Good sound quality.", "Affordable."]
+        },
+        {
+            id: 4,
+            name: "Nanglo (Food Tray)",
+            category: "Kitchen Items",
+            price: "Rs 500",
+            image: "../pictures/Product2/nanglo.jpg",
+            description: "Traditional bamboo tray used for drying food or serving snacks. Lightweight and durable.",
+            reviews: ["Authentic look.", "Useful in kitchen."]
+        },
+        {
+            id: 5,
+            name: "Bamboo Plant Holdeer",
+            category: "Decor Items",
+            price: "Rs 1,200",
+            image: "../pictures/Product2/decor6.jpeg",
+            description: "Handcrafted bamboo plant holder for indoor plants. This eco-friendly holder is made from sustainably sourced bamboo.",
+            reviews: ["Beautiful holder!", "Great for plants."]
+        },
+        {
+            id: 6,
+            name: "Bamboo Holder Decor",
+            category: "Decor Items",
+            price: "Rs 1,200",
+            image: "../pictures/Product2/decor2.jpeg",
+            description: "Handcrafted bamboo holder for decorative items. This eco-friendly holder is made from sustainably sourced bamboo.",
+            reviews: ["Beautiful holder!", "Great for decoration."]
+        },
+        {
+            id: 7,
+            name: "Bamboo Tissue Holder",
+            category: "Decor Items",
+            price: "Rs 2,200",
+            image: "../pictures/Product2/decor5.jpeg",
+            description: "Handcrafted bamboo tissue holder for easy access to tissues. This eco-friendly holder is made from sustainably sourced bamboo.",
+            reviews: ["Beautiful holder!", "Great for tissues."]
+        },
+        {
+            id: 8,
+            name: "Bamboo Lamp Decor",
+            category: "Decor Items",
+            price: "Rs 1,500",
+            image: "../pictures/Product2/decor3.jpeg",
+            description: "Handcrafted bamboo lamp providing warm, natural lighting. This eco-friendly lamp is made from sustainably sourced bamboo.",
+            reviews: ["Beautiful lamp!", "Great lighting."]
+        },
+        {
+            id: 9,
+            name: "Bamboo winnoeing flute",
+            category: "Decor Items",
+            price: "Rs 900",
+            image: "../pictures/Product2/fluet.jpg",
+            description: "Handcrafted bamboo winnoeing is esay to use and has a geat sound.",
+            reviews: ["Beautiful lamp!", "Great sound."]
+        },
+        // ADD MORE PRODUCTS HERE FOLLOWING THE SAME PATTERN
+    ];
+
+    // 2. FUNCTION TO GET ID FROM URL (e.g., ?id=2)
+    function getProductId() {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get('id');
+    }
+
+    // 3. LOAD PRODUCT DATA ON PAGE OPEN
+    window.onload = function() {
+        const id = getProductId();
+        
+        // Find the product in our list
+        const product = products.find(p => p.id == id);
+
+        if (product) {
+            // Update the HTML elements with product data
+            document.querySelector('.category-tag').innerText = product.category;
+            document.querySelector('.detail-title').innerText = product.name;
+            document.querySelector('.detail-price').innerText = product.price;
+            document.querySelector('.detail-desc').innerText = product.description;
+            document.getElementById('mainImage').src = product.image;
+            
+            // Update reviews (simple example)
+            const reviewList = document.getElementById('reviews-list');
+            reviewList.innerHTML = ''; // Clear existing
+            product.reviews.forEach(rev => {
+                reviewList.innerHTML += `<div class="review-item"><div class="review-author">Customer</div><div class="review-text">${rev}</div></div>`;
+            });
+            
+            // Update button action
+            const cartBtn = document.querySelector('.add-to-cart-big');
+            cartBtn.setAttribute('onclick', `addToCartDetail('${product.name}')`);
+
+        } else {
+            document.querySelector('.detail-title').innerText = "Product Not Found";
+        }
+    };
+
+    // KEEP YOUR EXISTING FUNCTIONS BELOW (add to cart, toast, etc)
+    function addToCartDetail(productName) {
+        const qty = document.getElementById('qtyInput').value;
+        showToast(qty + " x " + productName + " added to cart!");
+    }
+    
+    // ... (keep changeImage, updateQty, showToast, openTab, submitReviewDetail from previous code) ...
+</script>
+</body>
+</html>
